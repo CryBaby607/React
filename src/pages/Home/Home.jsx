@@ -97,9 +97,6 @@ function Home() {
         <div className="container">
           <div className="section-header">
             <h2 className="section-title">Compra por Categoría</h2>
-            <p className="section-subtitle">
-              Encuentra exactamente lo que buscas
-            </p>
           </div>
 
           <div className="categories-grid">
@@ -131,11 +128,7 @@ function Home() {
         <div className="container">
           <div className="section-header">
             <h2 className="section-title">Productos Destacados</h2>
-            <p className="section-subtitle">
-              Lo mejor de nuestro catálogo
-            </p>
           </div>
-
           <div className="products-grid">
             {featuredProducts.map((product) => (
               <article key={product.id} className="product-card">
