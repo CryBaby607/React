@@ -14,7 +14,7 @@
 /* === Grid del footer === */
 .footer-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--spacing-2xl);
 }
 
@@ -128,97 +128,19 @@
   color: var(--white);
   font-size: var(--fs-lg);
   text-decoration: none;
-  transition: all var(--transition-base);
-  border: 1px solid transparent;
-}
-
-.social-link:hover {
-  background-color: var(--accent);
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(58, 134, 255, 0.4);
-}
-
-.social-link:active {
-  transform: translateY(-1px);
-}
-
-/* === Newsletter === */
-.footer-newsletter-text {
-  font-size: var(--fs-sm);
-  color: rgba(255, 255, 255, 0.8);
-  line-height: 1.6;
-  margin: 0;
-}
-
-.newsletter-form {
-  margin-top: var(--spacing-sm);
-}
-
-.newsletter-input-wrapper {
-  display: flex;
-  gap: var(--spacing-xs);
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-xs);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all var(--transition-base);
-}
-
-.newsletter-input-wrapper:focus-within {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.2);
-}
-
-.newsletter-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: var(--white);
-  font-size: var(--fs-sm);
-  padding: var(--spacing-sm);
-  outline: none;
-}
-
-.newsletter-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.newsletter-btn {
-  background-color: var(--accent);
-  color: var(--white);
-  border: none;
-  border-radius: var(--radius-md);
-  padding: var(--spacing-sm) var(--spacing-md);
-  cursor: pointer;
-  transition: all var(--transition-base);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--fs-base);
-}
-
-.newsletter-btn:hover {
-  background-color: var(--secondary);
-  transform: scale(1.05);
-}
-
-.newsletter-btn:active {
-  transform: scale(0.98);
 }
 
 /* === Footer Bottom === */
 .footer-bottom {
   padding: var(--spacing-lg) 0;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .footer-bottom-content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-lg);
-  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
 }
 
 .footer-copyright {
@@ -228,49 +150,8 @@
 }
 
 .footer-copyright strong {
-  color: var(--accent);
+  color: inherit;
   font-weight: var(--fw-bold);
-}
-
-/* === Métodos de pago === */
-.footer-payment {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-}
-
-.payment-icon {
-  font-size: var(--fs-2xl);
-  color: rgba(255, 255, 255, 0.7);
-  transition: all var(--transition-base);
-  cursor: pointer;
-}
-
-.payment-icon:hover {
-  color: var(--accent);
-  transform: scale(1.1);
-}
-
-/* === Enlaces legales === */
-.footer-legal {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  font-size: var(--fs-sm);
-}
-
-.footer-legal a {
-  color: rgba(255, 255, 255, 0.7);
-  text-decoration: none;
-  transition: color var(--transition-base);
-}
-
-.footer-legal a:hover {
-  color: var(--accent);
-}
-
-.footer-legal .separator {
-  color: rgba(255, 255, 255, 0.4);
 }
 
 /* === Responsive - Tablet === */
@@ -296,31 +177,12 @@
     padding: var(--spacing-xl) 0;
   }
 
-  .footer-column {
-    text-align: left;
-  }
-
   .footer-description {
     max-width: 100%;
   }
 
-  .footer-bottom-content {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: var(--spacing-md);
-  }
-
   .footer-social {
     justify-content: flex-start;
-  }
-
-  .footer-payment {
-    order: -1;
-  }
-
-  .footer-legal {
-    justify-content: center;
   }
 }
 
@@ -338,23 +200,5 @@
     width: 36px;
     height: 36px;
     font-size: var(--fs-base);
-  }
-
-  .footer-payment {
-    gap: var(--spacing-sm);
-  }
-
-  .payment-icon {
-    font-size: var(--fs-xl);
-  }
-
-  .newsletter-input {
-    font-size: var(--fs-xs);
-    padding: var(--spacing-xs) var(--spacing-sm);
-  }
-
-  .newsletter-btn {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: var(--fs-sm);
   }
 }
