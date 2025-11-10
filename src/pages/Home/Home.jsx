@@ -206,7 +206,7 @@ function Home() {
         </div>
       </section>
 
-      {/* Newsletter Section */}
+          {/* Newsletter Section */}
       <section className="newsletter">
         <div className="container">
           <div className="newsletter-content">
@@ -218,28 +218,36 @@ function Home() {
                 Suscríbete y recibe ofertas exclusivas, lanzamientos anticipados y contenido especial directo en tu inbox.
               </p>
             </div>
-            <form className="newsletter-form" onSubmit={handleNewsletterSubmit}>
+            <div className="newsletter-form">
               <div className="newsletter-input-group">
                 <input 
                   type="email" 
-                  name="email"
                   placeholder="Tu correo electrónico"
                   className="newsletter-input"
                   aria-label="Correo electrónico para newsletter"
-                  required
+                  id="newsletter-email"
                 />
                 <button 
-                  type="submit" 
+                  onClick={(e) => {
+                    e.preventDefault()
+                    const email = document.getElementById('newsletter-email').value
+                    if (email) {
+                      console.log('Email suscrito:', email)
+                      alert('¡Gracias por suscribirte a nuestro newsletter!')
+                      document.getElementById('newsletter-email').value = ''
+                    }
+                  }}
                   className="newsletter-btn"
                   aria-label="Suscribirse al newsletter"
                 >
                   Suscribirme
                 </button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </section>
+
     </div>
   )
 }

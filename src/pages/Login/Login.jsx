@@ -5,6 +5,7 @@ import './Login.css'
 
 function Login() {
   const [loginData, setLoginData] = useState({ email: '', password: '' })
+  const [error, setError] = useState('')
   const { login } = useAuth()
   const navigate = useNavigate()
 
@@ -14,6 +15,8 @@ function Login() {
       login(loginData.email)
       navigate('/admin')
       setLoginData({ email: '', password: '' })
+    } else {
+      setError('Por favor completa todos los campos')
     }
   }
 
@@ -26,14 +29,17 @@ function Login() {
         </h1>
         <p className="login-subtitle">Panel de Administración</p>
 
-        <form onSubmit={handleLogin} className="login-form">
+        <div className="login-form">
           <div className="form-group">
             <label htmlFor="email">Correo Electrónico</label>
             <input
               id="email"
               type="email"
               value={loginData.email}
-              onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+              onChange={(e) => {
+                setLoginData({ ...loginData, email: e.target.value })
+                setError('')
+              }}
               placeholder="admin@dukicks.com"
               required
             />
@@ -45,16 +51,21 @@ function Login() {
               id="password"
               type="password"
               value={loginData.password}
-              onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+              onChange={(e) => {
+                setLoginData({ ...loginData, password: e.target.value })
+                setError('')
+              }}
               placeholder="••••••••"
               required
             />
           </div>
 
-          <button type="submit" className="btn btn-primary">
+          {error && <p className="error-message">{error}</p>}
+
+          <button onClick={handleLogin} className="btn btn-primary">
             Iniciar Sesión
           </button>
-        </form>
+        </div>
 
         <p className="login-demo">Demo: usa cualquier email y contraseña</p>
       </div>

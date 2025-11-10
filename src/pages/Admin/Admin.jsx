@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import './Admin.css'
 
-function ProductCRUD() {
+function Admin() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const [products, setProducts] = useState([
@@ -82,13 +82,12 @@ function ProductCRUD() {
               {editingId ? 'Editar Producto' : 'Agregar Nuevo Producto'}
             </h2>
 
-            <form onSubmit={handleAddProduct} className="product-form">
+            <div className="product-form">
               <input
                 type="text"
                 placeholder="Nombre del producto"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                required
               />
 
               <input
@@ -96,13 +95,11 @@ function ProductCRUD() {
                 placeholder="Precio"
                 value={formData.price}
                 onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                required
               />
 
               <select
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                required
               >
                 <option value="">Selecciona Categoría</option>
                 <option value="Hombre">Hombre</option>
@@ -115,20 +112,19 @@ function ProductCRUD() {
                 placeholder="Stock"
                 value={formData.stock}
                 onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
-                required
               />
 
               <div className="form-buttons">
-                <button type="submit" className="btn btn-primary">
+                <button onClick={handleAddProduct} className="btn btn-primary">
                   {editingId ? 'Actualizar' : 'Agregar'}
                 </button>
                 {editingId && (
-                  <button type="button" onClick={handleCancel} className="btn btn-secondary">
+                  <button onClick={handleCancel} className="btn btn-secondary">
                     Cancelar
                   </button>
                 )}
               </div>
-            </form>
+            </div>
           </div>
 
           {/* Tabla de productos */}
@@ -202,4 +198,4 @@ function ProductCRUD() {
   )
 }
 
-export default ProductCRUD
+export default Admin
