@@ -1,13 +1,13 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faMagnifyingGlass,
-  faShoppingCart
-} from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass, faShoppingCart } from '@fortawesome/free-solid-svg-icons'
+import { useCart } from '../../context/CartContext'
 import './Header.css'
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { itemCount } = useCart()
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -23,34 +23,34 @@ function Header() {
         <div className="header-content">
           {/* Logo */}
           <div className="logo">
-            <a href="/" onClick={closeMenu}>
+            <Link to="/" onClick={closeMenu}>
               <span className="logo-text">
                 <span className="logo-du">DU</span>
                 <span className="logo-kicks">KICKS</span>
               </span>
-            </a>
+            </Link>
           </div>
 
           {/* Navigation */}
           <nav className={`nav ${isMenuOpen ? 'active' : ''}`}>
             <ul className="nav-list">
               <li>
-                <a href="/" onClick={closeMenu}>
+                <Link to="/" onClick={closeMenu}>
                   Inicio
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#about" onClick={closeMenu}>
+                <a href="#hombre" onClick={closeMenu}>
                   Hombre
                 </a>
               </li>
               <li>
-                <a href="#services" onClick={closeMenu}>
+                <a href="#mujer" onClick={closeMenu}>
                   Mujer
                 </a>
               </li>
               <li>
-                <a href="#contact" onClick={closeMenu}>
+                <a href="#gorras" onClick={closeMenu}>
                   Gorras
                 </a>
               </li>
@@ -62,10 +62,19 @@ function Header() {
             <button className="icon-btn" aria-label="Search">
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </button>
-            <button className="icon-btn cart-btn" aria-label="Shopping cart">
+
+            {/* Link al carrito */}
+            <Link
+              to="/cart"
+              className="icon-btn cart-btn"
+              aria-label="Shopping cart"
+              onClick={closeMenu}
+            >
               <FontAwesomeIcon icon={faShoppingCart} />
-              <span className="cart-badge">1</span>
-            </button>
+              {itemCount > 0 && (
+                <span className="cart-badge">{itemCount}</span>
+              )}
+            </Link>
 
             {/* Toggle Menu Mobile */}
             <button
