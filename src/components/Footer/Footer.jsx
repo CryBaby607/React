@@ -1,3 +1,10 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faFacebookF,
+  faInstagram,
+  faTwitter,
+  faTiktok
+} from '@fortawesome/free-brands-svg-icons'
 import './Footer.css'
 
 function Footer() {
@@ -5,11 +12,6 @@ function Footer() {
 
   return (
     <footer className="footer">
-      <link 
-        rel="stylesheet" 
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
-      />
-
       {/* Sección principal del footer */}
       <div className="footer-main">
         <div className="container">
@@ -37,7 +39,7 @@ function Footer() {
                   aria-label="Síguenos en Facebook"
                   className="social-link"
                 >
-                  <i className="fab fa-facebook-f"></i>
+                  <FontAwesomeIcon icon={faFacebookF} />
                 </a>
                 <a 
                   href="https://instagram.com" 
@@ -46,7 +48,7 @@ function Footer() {
                   aria-label="Síguenos en Instagram"
                   className="social-link"
                 >
-                  <i className="fab fa-instagram"></i>
+                  <FontAwesomeIcon icon={faInstagram} />
                 </a>
                 <a 
                   href="https://twitter.com" 
@@ -55,7 +57,7 @@ function Footer() {
                   aria-label="Síguenos en Twitter"
                   className="social-link"
                 >
-                  <i className="fab fa-twitter"></i>
+                  <FontAwesomeIcon icon={faTwitter} />
                 </a>
                 <a 
                   href="https://tiktok.com" 
@@ -64,7 +66,7 @@ function Footer() {
                   aria-label="Síguenos en TikTok"
                   className="social-link"
                 >
-                  <i className="fab fa-tiktok"></i>
+                  <FontAwesomeIcon icon={faTiktok} />
                 </a>
               </div>
             </div>

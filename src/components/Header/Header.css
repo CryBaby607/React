@@ -195,11 +195,6 @@
   .nav-list a {
     font-size: var(--fs-sm);
   }
-
-  .btn {
-    padding: var(--spacing-sm) var(--spacing-md);
-    font-size: var(--fs-sm);
-  }
 }
 
 /* === Responsive - Mobile === */
@@ -276,13 +271,9 @@
     margin-right: var(--spacing-sm);
   }
 
-    .hamburger span {
+  .hamburger span {
     width: 20px;
     height: 2.5px;
-  }
-
-  .header-icons {
-    gap: var(--spacing-md);
   }
 
   .icon-btn {

@@ -65,12 +65,6 @@ function Home() {
 
   return (
     <div className="home">
-      {/* Font Awesome CDN */}
-      <link 
-        rel="stylesheet" 
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
-      />
-
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-content">

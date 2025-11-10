@@ -1,5 +1,5 @@
-
 import { useState } from 'react'
+import './config/fontawesome'
 import './styles/variables.css'
 import './styles/typography.css'
 import './styles/global.css'
@@ -10,9 +10,9 @@ import Home from './pages/Home/Home'
 
 export default function App() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <div>
       <Header />
-      <main style={{ flex: 1 }}>
+      <main>
         <Home />
       </main>
       <Footer />

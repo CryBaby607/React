@@ -1,4 +1,9 @@
 import { useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faMagnifyingGlass,
+  faShoppingCart
+} from '@fortawesome/free-solid-svg-icons'
 import './Header.css'
 
 function Header() {
@@ -14,7 +19,6 @@ function Header() {
 
   return (
     <header className="header">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
       <div className="container">
         <div className="header-content">
           {/* Logo */}
@@ -31,7 +35,7 @@ function Header() {
           <nav className={`nav ${isMenuOpen ? 'active' : ''}`}>
             <ul className="nav-list">
               <li>
-                <a href="#home" onClick={closeMenu}>
+                <a href="/" onClick={closeMenu}>
                   Inicio
                 </a>
               </li>
@@ -56,10 +60,10 @@ function Header() {
           {/* Icons and Hamburger */}
           <div className="header-controls">
             <button className="icon-btn" aria-label="Search">
-              <i className="fas fa-magnifying-glass"></i>
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
             </button>
             <button className="icon-btn cart-btn" aria-label="Shopping cart">
-              <i className="fas fa-shopping-cart"></i>
+              <FontAwesomeIcon icon={faShoppingCart} />
               <span className="cart-badge">1</span>
             </button>
 
