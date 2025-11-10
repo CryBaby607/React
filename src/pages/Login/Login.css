@@ -64,11 +64,20 @@
   border-radius: var(--radius-md);
   font-size: var(--fs-base);
   transition: all var(--transition-base);
+  font-family: var(--font-text);
 }
 
 .form-group input:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.1);
+  outline: none;
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: var(--fs-sm);
+  margin: -var(--spacing-lg) 0 var(--spacing-lg) 0;
+  text-align: center;
 }
 
 .login-demo {

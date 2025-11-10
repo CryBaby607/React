@@ -13,8 +13,9 @@ function Login() {
     e.preventDefault()
     if (loginData.email && loginData.password) {
       login(loginData.email)
-      navigate('/admin')
       setLoginData({ email: '', password: '' })
+      setError('')
+      navigate('/admin')
     } else {
       setError('Por favor completa todos los campos')
     }
@@ -41,7 +42,6 @@ function Login() {
                 setError('')
               }}
               placeholder="admin@dukicks.com"
-              required
             />
           </div>
 
@@ -56,7 +56,6 @@ function Login() {
                 setError('')
               }}
               placeholder="••••••••"
-              required
             />
           </div>
 
