@@ -1,126 +1,143 @@
-import { createContext, useContext, useState, useMemo } from 'react'
-import {
-  addOrUpdateCartItem,
-  updateCartItemQuantity,
-  removeCartItem,
-  getCartSummary,
-  validateCart
-} from '../utils/cartHelpers'
+// src/pages/Cart/Cart.jsx debería SOLO ser:
+import { useCart } from '../../context/CartContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { formatPrice } from '../../utils/formatters'
+import './Cart.css'
 
-// Crear el contexto
-const CartContext = createContext()
+function Cart() {
+  const { cartItems, updateQuantity, removeFromCart, subtotal, total, itemCount } = useCart()
 
-// Proveedor del contexto
-export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: 'Nike Air Max 270',
-      price: 3299,
-      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&h=500&fit=crop',
-      category: 'Hombre',
-      quantity: 1
-    },
-    {
-      id: 2,
-      name: 'Adidas Ultraboost',
-      price: 3799,
-      image: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=500&h=500&fit=crop',
-      category: 'Mujer',
-      quantity: 2
-    },
-    {
-      id: 3,
-      name: 'Jordan Retro 1',
-      price: 4299,
-      image: 'https://images.unsplash.com/photo-1556906781-9a412961c28c?w=500&h=500&fit=crop',
-      category: 'Gorras',
-      quantity: 1
-    }
-  ])
-
-  /**
-   * Agregar producto al carrito (o incrementar cantidad si existe)
-   * @param {Object} product - Producto a agregar
-   */
-  const addToCart = (product) => {
-    try {
-      const updated = addOrUpdateCartItem(cartItems, product)
-      const validation = validateCart(updated)
-
-      if (!validation.valid) {
-        console.error('Carrito inválido después de agregar:', validation.errors)
-        return
-      }
-
-      setCartItems(updated)
-    } catch (error) {
-      console.error('Error al agregar producto:', error.message)
+  const handleQuantityChange = (productId, newQuantity) => {
+    const quantity = parseInt(newQuantity, 10)
+    if (quantity > 0 && quantity <= 99) {
+      updateQuantity(productId, quantity)
     }
   }
 
-  /**
-   * Actualizar cantidad de un producto
-   * @param {number} productId - ID del producto
-   * @param {number} quantity - Nueva cantidad
-   */
-  const updateQuantity = (productId, quantity) => {
-    try {
-      const updated = updateCartItemQuantity(cartItems, productId, quantity)
-      setCartItems(updated)
-    } catch (error) {
-      console.error('Error al actualizar cantidad:', error.message)
-    }
+  if (cartItems.length === 0) {
+    return (
+      <div className="cart-page">
+        <div className="container">
+          <div className="cart-empty">
+            <div className="empty-content">
+              <h1 className="empty-title">Tu carrito está vacío</h1>
+              <p className="empty-description">
+                Agrega productos para comenzar tu compra
+              </p>
+              <a href="/" className="btn btn-primary">
+                Explorar Productos
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
-
-  /**
-   * Eliminar producto del carrito
-   * @param {number} productId - ID del producto
-   */
-  const removeFromCart = (productId) => {
-    try {
-      const updated = removeCartItem(cartItems, productId)
-      setCartItems(updated)
-    } catch (error) {
-      console.error('Error al eliminar producto:', error.message)
-    }
-  }
-
-  /**
-   * Calcular resumen del carrito de forma memoizada
-   * Solo se recalcula cuando cartItems cambia
-   */
-  const summary = useMemo(() => {
-    return getCartSummary(cartItems)
-  }, [cartItems])
 
   return (
-    <CartContext.Provider
-      value={{
-        cartItems,
-        addToCart,
-        updateQuantity,
-        removeFromCart,
-        subtotal: summary.subtotal,
-        total: summary.total,
-        itemCount: summary.itemCount,
-        isEmpty: summary.isEmpty
-      }}
-    >
-      {children}
-    </CartContext.Provider>
+    <div className="cart-page">
+      <div className="container">
+        <h1 className="page-title">Carrito de Compras</h1>
+        
+        <div className="cart-wrapper">
+          {/* Sección de items */}
+          <section className="cart-items-section">
+            <div className="cart-items-header">
+              <span className="header-products">Productos</span>
+              <span>Precio</span>
+              <span>Cantidad</span>
+              <span>Subtotal</span>
+              <span></span>
+            </div>
+
+            <div className="cart-items-list">
+              {cartItems.map((item) => (
+                <article key={item.id} className="cart-item">
+                  <div className="item-image-wrapper">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="item-image"
+                    />
+                  </div>
+
+                  <div className="item-info">
+                    <h3 className="item-name">{item.name}</h3>
+                    <p className="item-category">{item.category}</p>
+                  </div>
+
+                  <div className="item-price">
+                    <span className="price-label">Precio</span>
+                    <span className="price-value">{formatPrice(item.price)}</span>
+                  </div>
+
+                  <div className="item-quantity">
+                    <label htmlFor={`quantity-${item.id}`} className="quantity-label">
+                      Cantidad
+                    </label>
+                    <input
+                      id={`quantity-${item.id}`}
+                      type="number"
+                      min="1"
+                      max="99"
+                      value={item.quantity}
+                      onChange={(e) => handleQuantityChange(item.id, e.target.value)}
+                      className="quantity-input"
+                      aria-label={`Cantidad de ${item.name}`}
+                    />
+                  </div>
+
+                  <div className="item-subtotal">
+                    <span className="subtotal-label">Subtotal</span>
+                    <span className="subtotal-value">
+                      {formatPrice(item.price * item.quantity)}
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={() => removeFromCart(item.id)}
+                    className="btn-remove"
+                    aria-label={`Eliminar ${item.name} del carrito`}
+                    title="Eliminar producto"
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* Resumen del carrito */}
+          <aside className="cart-summary">
+            <div className="summary-card">
+              <h2 className="summary-title">Resumen</h2>
+
+              <div className="summary-row">
+                <span className="summary-label">Productos ({itemCount})</span>
+                <span className="summary-value">{formatPrice(subtotal)}</span>
+              </div>
+
+              <div className="summary-row summary-total">
+                <span className="summary-label">Total</span>
+                <span className="summary-value total-value">
+                  {formatPrice(total)}
+                </span>
+              </div>
+
+              <button className="btn btn-primary btn-checkout">
+                Proceder al Pago
+              </button>
+
+              <a href="/" className="btn btn-continue">
+                Seguir Comprando
+              </a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
   )
 }
 
-/**
- * Hook personalizado para acceder al contexto del carrito
- * @returns {Object} { cartItems, addToCart, updateQuantity, removeFromCart, ... }
- * @throws {Error} Si se usa fuera del CartProvider
- */
-export const useCart = () => {
-  const context = useContext(CartContext)
-  if (!context) {
-    throw new Error('useCart debe ser usado dentro de CartProvider')
-  }
-  return context
-}
+export default Cart

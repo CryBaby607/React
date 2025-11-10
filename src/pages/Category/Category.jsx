@@ -1,11 +1,9 @@
 import { useState, useMemo, useCallback } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import { useCart } from '../../context/CartContext'
-import { getProductsByCategory, getPriceWithDiscount } from '../../data/Products'
-import { formatPrice } from '../../utils/formatters'
+import { getProductsByCategory } from '../../data/Products'
 import { sortProducts, getSortOptions } from '../../utils/sorting'
 import { getUniqueBrands, applyFilters } from '../../utils/filters'
+import ProductCard from '../../components/ProductCard'
 import './Category.css'
 
 function CategoryPage({ category }) {
@@ -13,7 +11,7 @@ function CategoryPage({ category }) {
   const [selectedBrand, setSelectedBrand] = useState('Todas')
   const [sortBy, setSortBy] = useState('newest')
 
-  // Obtener todos los productos de la categoría
+  // Obtener todos los productos de la categoría (memoizado)
   const allProducts = useMemo(
     () => getProductsByCategory(category),
     [category]
@@ -37,22 +35,13 @@ function CategoryPage({ category }) {
 
   /**
    * Agregar producto al carrito
-   * Memoizado para evitar recrear función cada render
+   * El ProductCard ya normaliza el producto, solo pasamos el callback
    */
-  const handleAddToCart = useCallback((product) => {
+  const handleAddToCart = useCallback((cartItem) => {
     try {
-      const cartItem = {
-        id: product.id,
-        name: `${product.brand} ${product.model}`,
-        price: getPriceWithDiscount(product),
-        image: product.images[0],
-        category: product.category
-      }
-
       addToCart(cartItem)
-
       // Feedback al usuario (en futuro: usar Toast)
-      alert(`${product.brand} ${product.model} agregado al carrito`)
+      alert(`${cartItem.name} agregado al carrito`)
     } catch (error) {
       console.error('Error al agregar al carrito:', error)
       alert('Error al agregar producto')
@@ -68,10 +57,19 @@ function CategoryPage({ category }) {
 
   return (
     <div className="category-page">
+      {/* Header de categoría */}
+      <div className="category-header">
+        <div className="container">
+          <h1 className="category-title">{categoryTitles[category] || category}</h1>
+        </div>
+      </div>
+
       <div className="container">
         <div className="category-wrapper">
-          {/* Sidebar Filtros */}
+          
+          {/* ===== SIDEBAR: FILTROS ===== */}
           <aside className="category-sidebar">
+            
             {/* Filtro de Marca */}
             <div className="filter-section">
               <h3 className="filter-title">Marcas</h3>
@@ -79,19 +77,15 @@ function CategoryPage({ category }) {
                 {brandsInCategory.map(brand => (
                   <button
                     key={brand}
-                    className={`brand-btn ${
-                      selectedBrand === brand ? 'active' : ''
-                    }`}
+                    className={`brand-btn ${selectedBrand === brand ? 'active' : ''}`}
                     onClick={() => setSelectedBrand(brand)}
                     aria-pressed={selectedBrand === brand}
                   >
                     {brand}
                     <span className="brand-count">
-                      (
-                      {brand === 'Todas'
+                      ({brand === 'Todas'
                         ? allProducts.length
-                        : allProducts.filter(p => p.brand === brand).length}
-                      )
+                        : allProducts.filter(p => p.brand === brand).length})
                     </span>
                   </button>
                 ))}
@@ -116,8 +110,10 @@ function CategoryPage({ category }) {
             </div>
           </aside>
 
-          {/* Contenido Principal */}
+          {/* ===== CONTENIDO PRINCIPAL ===== */}
           <section className="category-content">
+            
+            {/* Info de productos */}
             <div className="products-info">
               <p className="products-count">
                 Mostrando {sortedProducts.length} de {allProducts.length} productos
@@ -129,91 +125,24 @@ function CategoryPage({ category }) {
               )}
             </div>
 
-            {/* Grid de Productos */}
+            {/* ===== GRID DE PRODUCTOS ===== */}
             <div className="category-products-grid">
               {sortedProducts.map(product => (
-                <article key={product.id} className="category-product-card">
-                  {/* Badges */}
-                  <div className="product-badges">
-                    {product.discount > 0 && (
-                      <span className="badge badge-discount">
-                        -{product.discount}%
-                      </span>
-                    )}
-                    {product.isNew && (
-                      <span className="badge badge-new">NUEVO</span>
-                    )}
-                  </div>
-
-                  {/* Imagen */}
-                  <div className="category-product-image-wrapper">
-                    <img
-                      src={product.images[0]}
-                      alt={product.model}
-                      className="category-product-image"
-                      loading="lazy"
-                    />
-                    <div className="product-overlay">
-                      <button
-                        className="btn btn-primary btn-add-to-cart"
-                        onClick={() => handleAddToCart(product)}
-                        title={`Agregar ${product.brand} ${product.model} al carrito`}
-                      >
-                        <FontAwesomeIcon icon={faShoppingCart} />
-                        Agregar
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Información */}
-                  <div className="category-product-info">
-                    <div className="product-header">
-                      <h3 className="category-product-brand">
-                        {product.brand}
-                      </h3>
-                      <span className="category-product-rating">
-                        ⭐ {product.rating}
-                      </span>
-                    </div>
-
-                    <p className="category-product-model">{product.model}</p>
-
-                    {/* Precios */}
-                    <div className="product-prices">
-                      {product.discount > 0 ? (
-                        <>
-                          <span className="original-price">
-                            {formatPrice(product.price)}
-                          </span>
-                          <span className="final-price">
-                            {formatPrice(getPriceWithDiscount(product))}
-                          </span>
-                        </>
-                      ) : (
-                        <span className="final-price">
-                          {formatPrice(product.price)}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Stock */}
-                    <div className="stock-info">
-                      {product.inStock ? (
-                        <span className="in-stock">En Stock</span>
-                      ) : (
-                        <span className="out-of-stock">Agotado</span>
-                      )}
-                    </div>
-                  </div>
-                </article>
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onAddToCart={handleAddToCart}
+                  variant="default"
+                  showCategory={false}
+                  showStock={true}
+                />
               ))}
             </div>
 
+            {/* Mensaje si no hay productos */}
             {sortedProducts.length === 0 && (
               <div className="no-products">
-                <p>
-                  No hay productos disponibles con los filtros seleccionados
-                </p>
+                <p>No hay productos disponibles con los filtros seleccionados</p>
               </div>
             )}
           </section>

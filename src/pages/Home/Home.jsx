@@ -1,36 +1,16 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useCart } from '../../context/CartContext'
+import { getFeaturedProducts } from '../../data/Products'
+import ProductCard from '../../components/ProductCard'
 import './Home.css'
 
 function Home() {
+  const { addToCart } = useCart()
   const [newsletterEmail, setNewsletterEmail] = useState('')
 
-  // Datos de productos destacados
-  const featuredProducts = [
-    {
-      id: 1,
-      name: 'Nike Air Max 270',
-      price: '$3,299',
-      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&h=500&fit=crop',
-      category: 'Hombre',
-      isNew: true
-    },
-    {
-      id: 2,
-      name: 'Adidas Ultraboost',
-      price: '$3,799',
-      image: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=500&h=500&fit=crop',
-      category: 'Mujer',
-      isNew: true
-    },
-    {
-      id: 3,
-      name: 'Jordan Retro 1',
-      price: '$4,299',
-      image: 'https://images.unsplash.com/photo-1556906781-9a412961c28c?w=500&h=500&fit=crop',
-      category: 'Hombre',
-      isNew: false
-    }
-  ]
+  // Obtener productos destacados desde el archivo de datos
+  const featuredProducts = getFeaturedProducts()
 
   // Datos de categorías
   const categories = [
@@ -38,24 +18,40 @@ function Home() {
       id: 1,
       name: 'Hombre',
       image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&h=400&fit=crop',
-      link: '#hombre'
+      link: '/hombre'
     },
     {
       id: 2,
       name: 'Mujer',
       image: 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=600&h=400&fit=crop',
-      link: '#mujer'
+      link: '/mujer'
     },
     {
       id: 3,
       name: 'Gorras',
       image: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&h=400&fit=crop',
-      link: '#gorras'
+      link: '/gorras'
     }
   ]
 
-  // Handler para el newsletter
-  const handleNewsletterSubmit = () => {
+  /**
+   * Handler para agregar al carrito desde productos destacados
+   */
+  const handleAddToCart = (cartItem) => {
+    try {
+      addToCart(cartItem)
+      alert(`${cartItem.name} agregado al carrito`)
+    } catch (error) {
+      console.error('Error al agregar al carrito:', error)
+      alert('Error al agregar producto')
+    }
+  }
+
+  /**
+   * Handler para el newsletter
+   */
+  const handleNewsletterSubmit = (e) => {
+    e.preventDefault()
     if (newsletterEmail) {
       console.log('Email suscrito:', newsletterEmail)
       alert('¡Gracias por suscribirte a nuestro newsletter!')
@@ -65,61 +61,50 @@ function Home() {
 
   return (
     <div className="home">
-      {/* Hero Section */}
+      
+      {/* ===== HERO SECTION ===== */}
       <section className="hero">
         <div className="hero-content">
           <div className="container">
             <div className="hero-text">
-              <h1 className="hero-title">
-                Bienvenido a dukicks
-              </h1>
-              <p className="hero-description"> 
+              <h1 className="hero-title">Bienvenido a DUKICKS</h1>
+              <p className="hero-description">
                 Encuentra tu estilo perfecto con las mejores marcas del mercado.
               </p>
               <div className="hero-actions">
-                <a href="#productos" className="btn btn-primary">
+                <Link to="/hombre" className="btn btn-primary">
                   Ver Colección
-                </a>
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-       {/* Productos Destacados Section */}
+      {/* ===== PRODUCTOS DESTACADOS ===== */}
       <section className="featured-section">
         <div className="container">
           <div className="section-header">
             <h2 className="section-title">Productos Destacados</h2>
           </div>
+          
+          {/* Grid con ProductCard */}
           <div className="products-grid">
             {featuredProducts.map((product) => (
-              <article key={product.id} className="product-card">
-                {product.isNew && (
-                  <span className="product-badge">Nuevo</span>
-                )}
-                <div className="product-image-wrapper">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="product-image"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="product-info">
-                  <span className="product-category">{product.category}</span>
-                  <h3 className="product-name">{product.name}</h3>
-                  <div className="product-footer">
-                    <span className="product-price">{product.price}</span>
-                  </div>
-                </div>
-              </article>
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAddToCart={handleAddToCart}
+                variant="featured"
+                showCategory={true}
+                showStock={false}
+              />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Categorías Section */}
+      {/* ===== CATEGORÍAS ===== */}
       <section className="categories-section">
         <div className="container">
           <div className="section-header">
@@ -128,15 +113,15 @@ function Home() {
 
           <div className="categories-grid">
             {categories.map((category) => (
-              <a 
-                href={category.link} 
-                key={category.id} 
+              <Link
+                to={category.link}
+                key={category.id}
                 className="category-card"
                 aria-label={`Ver productos de ${category.name}`}
               >
                 <div className="category-image-wrapper">
-                  <img 
-                    src={category.image} 
+                  <img
+                    src={category.image}
                     alt={`Categoría ${category.name}`}
                     className="category-image"
                     loading="lazy"
@@ -144,27 +129,29 @@ function Home() {
                   <div className="category-overlay"></div>
                 </div>
                 <h3 className="category-name">{category.name}</h3>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* About Us Section */}
+      {/* ===== ABOUT US ===== */}
       <section className="about-us">
         <div className="container">
           <div className="about-content">
             <div className="about-text">
-              <h2>Más que una tienda, una <span className="highlight">comunidad</span></h2>
+              <h2>
+                Más que una tienda, una <span className="highlight">comunidad</span>
+              </h2>
               <p>
-                En DUKICKS no solo vendemos tenis y gorras, creamos conexiones. 
+                En DUKICKS no solo vendemos tenis y gorras, creamos conexiones.
                 Desde 2013, hemos sido el punto de encuentro para los amantes de la cultura urbana y el streetwear.
               </p>
               <p>
-                Nuestra pasión por la moda urbana nos impulsa a buscar constantemente las piezas más exclusivas 
+                Nuestra pasión por la moda urbana nos impulsa a buscar constantemente las piezas más exclusivas
                 y las colaboraciones más esperadas, siempre manteniendo la autenticidad que nos caracteriza.
               </p>
-              
+
               <div className="stats">
                 <div className="stat-item">
                   <span className="stat-number">10+</span>
@@ -188,37 +175,37 @@ function Home() {
         </div>
       </section>
 
-      {/* Newsletter Section */}
+      {/* ===== NEWSLETTER ===== */}
       <section className="newsletter">
         <div className="container">
           <div className="newsletter-content">
             <div className="newsletter-text">
-              <h2 className="newsletter-title">
-                Únete a la comunidad DUKICKS
-              </h2>
+              <h2 className="newsletter-title">Únete a la comunidad DUKICKS</h2>
               <p className="newsletter-description">
                 Suscríbete y recibe ofertas exclusivas, lanzamientos anticipados y contenido especial directo en tu inbox.
               </p>
             </div>
-            <div className="newsletter-form">
+            
+            <form onSubmit={handleNewsletterSubmit} className="newsletter-form">
               <div className="newsletter-input-group">
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   placeholder="Tu correo electrónico"
                   className="newsletter-input"
                   aria-label="Correo electrónico para newsletter"
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
+                  required
                 />
-                <button 
-                  onClick={handleNewsletterSubmit}
+                <button
+                  type="submit"
                   className="newsletter-btn"
                   aria-label="Suscribirse al newsletter"
                 >
                   Suscribirme
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </section>
