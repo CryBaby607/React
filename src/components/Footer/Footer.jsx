@@ -99,9 +99,6 @@ function Footer() {
                   <a href="#devoluciones">Devoluciones</a>
                 </li>
                 <li>
-                  <a href="#pagos">Formas de pago</a>
-                </li>
-                <li>
                   <a href="#faq">Preguntas frecuentes</a>
                 </li>
                 <li>

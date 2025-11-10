@@ -1,6 +1,9 @@
+import { useState } from 'react'
 import './Home.css'
 
 function Home() {
+  const [newsletterEmail, setNewsletterEmail] = useState('')
+
   // Datos de productos destacados
   const featuredProducts = [
     {
@@ -51,15 +54,13 @@ function Home() {
     }
   ]
 
-  // Handler para el formulario de newsletter
-  const handleNewsletterSubmit = (e) => {
-    e.preventDefault()
-    // Aquí puedes agregar la lógica de suscripción
-    const email = e.target.elements.email.value
-    console.log('Email suscrito:', email)
-    // Mostrar mensaje de éxito o enviar a API
-    alert('¡Gracias por suscribirte a nuestro newsletter!')
-    e.target.reset()
+  // Handler para el newsletter
+  const handleNewsletterSubmit = () => {
+    if (newsletterEmail) {
+      console.log('Email suscrito:', newsletterEmail)
+      alert('¡Gracias por suscribirte a nuestro newsletter!')
+      setNewsletterEmail('')
+    }
   }
 
   return (
@@ -76,7 +77,7 @@ function Home() {
           <div className="container">
             <div className="hero-text">
               <h1 className="hero-title">
-                Bienvenido a duki
+                Bienvenido a dukicks
               </h1>
               <p className="hero-description"> 
                 Encuentra tu estilo perfecto con las mejores marcas del mercado.
@@ -89,7 +90,39 @@ function Home() {
             </div>
           </div>
         </div>
-        
+      </section>
+
+       {/* Productos Destacados Section */}
+      <section className="featured-section">
+        <div className="container">
+          <div className="section-header">
+            <h2 className="section-title">Productos Destacados</h2>
+          </div>
+          <div className="products-grid">
+            {featuredProducts.map((product) => (
+              <article key={product.id} className="product-card">
+                {product.isNew && (
+                  <span className="product-badge">Nuevo</span>
+                )}
+                <div className="product-image-wrapper">
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="product-image"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="product-info">
+                  <span className="product-category">{product.category}</span>
+                  <h3 className="product-name">{product.name}</h3>
+                  <div className="product-footer">
+                    <span className="product-price">{product.price}</span>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Categorías Section */}
@@ -119,51 +152,6 @@ function Home() {
                 <h3 className="category-name">{category.name}</h3>
               </a>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Productos Destacados Section */}
-      <section className="featured-section">
-        <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">Productos Destacados</h2>
-          </div>
-          <div className="products-grid">
-            {featuredProducts.map((product) => (
-              <article key={product.id} className="product-card">
-                {product.isNew && (
-                  <span className="product-badge">Nuevo</span>
-                )}
-                <div className="product-image-wrapper">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="product-image"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="product-info">
-                  <span className="product-category">{product.category}</span>
-                  <h3 className="product-name">{product.name}</h3>
-                  <div className="product-footer">
-                    <span className="product-price">{product.price}</span>
-                    <button 
-                      className="btn-add-cart"
-                      aria-label={`Agregar ${product.name} al carrito`}
-                    >
-                      <i className="fas fa-shopping-cart"></i>
-                    </button>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <div className="section-cta">
-            <a href="#productos" className="btn btn-outline">
-              Ver Todos los Productos
-            </a>
           </div>
         </div>
       </section>
@@ -206,7 +194,7 @@ function Home() {
         </div>
       </section>
 
-          {/* Newsletter Section */}
+      {/* Newsletter Section */}
       <section className="newsletter">
         <div className="container">
           <div className="newsletter-content">
@@ -225,18 +213,11 @@ function Home() {
                   placeholder="Tu correo electrónico"
                   className="newsletter-input"
                   aria-label="Correo electrónico para newsletter"
-                  id="newsletter-email"
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
                 />
                 <button 
-                  onClick={(e) => {
-                    e.preventDefault()
-                    const email = document.getElementById('newsletter-email').value
-                    if (email) {
-                      console.log('Email suscrito:', email)
-                      alert('¡Gracias por suscribirte a nuestro newsletter!')
-                      document.getElementById('newsletter-email').value = ''
-                    }
-                  }}
+                  onClick={handleNewsletterSubmit}
                   className="newsletter-btn"
                   aria-label="Suscribirse al newsletter"
                 >
@@ -247,7 +228,6 @@ function Home() {
           </div>
         </div>
       </section>
-
     </div>
   )
 }
