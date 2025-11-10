@@ -3,20 +3,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import { useCart } from '../../context/CartContext'
 import {
-  getCategories,
   getProductsByCategory,
-  mockProducts,
-  getPriceWithDiscount
+  getPriceWithDiscount,
+  getBrands
 } from '../../data/Products'
-import './Shop.css'
+import './Category.css'
 
-function Shop() {
+function CategoryPage({ category }) {
   const { addToCart } = useCart()
-  const [selectedCategory, setSelectedCategory] = useState('Hombre')
+  const [selectedBrand, setSelectedBrand] = useState('Todas')
   const [sortBy, setSortBy] = useState('newest')
 
-  const categories = getCategories()
-  let filteredProducts = getProductsByCategory(selectedCategory)
+  // Obtener todos los productos de la categoría
+  let filteredProducts = getProductsByCategory(category)
+
+  // Obtener marcas únicas de esta categoría
+  const brandsInCategory = [
+    'Todas',
+    ...new Set(filteredProducts.map(p => p.brand))
+  ]
+
+  // Filtrar por marca
+  if (selectedBrand !== 'Todas') {
+    filteredProducts = filteredProducts.filter(p => p.brand === selectedBrand)
+  }
 
   // Aplicar ordenamiento
   if (sortBy === 'price-low') {
@@ -49,32 +59,43 @@ function Shop() {
     alert(`${product.brand} ${product.model} agregado al carrito`)
   }
 
+  // Mapeo de títulos de categoría
+  const categoryTitles = {
+    'Hombre': 'Tenis Hombre',
+    'Mujer': 'Tenis Mujer',
+    'Gorras': 'Gorras'
+  }
+
   return (
-    <div className="shop-page">
+    <div className="category-page">
       <div className="container">
-        <div className="shop-wrapper">
-          {/* Filtros Sidebar */}
-          <aside className="shop-sidebar">
+        <div className="category-wrapper">
+          {/* Sidebar Filtros */}
+          <aside className="category-sidebar">
+            {/* Filtro de Marca */}
             <div className="filter-section">
-              <h3 className="filter-title">Categorías</h3>
-              <div className="filter-categories">
-                {categories.map(category => (
+              <h3 className="filter-title">Marcas</h3>
+              <div className="filter-brands">
+                {brandsInCategory.map(brand => (
                   <button
-                    key={category}
-                    className={`category-btn ${
-                      selectedCategory === category ? 'active' : ''
+                    key={brand}
+                    className={`brand-btn ${
+                      selectedBrand === brand ? 'active' : ''
                     }`}
-                    onClick={() => setSelectedCategory(category)}
+                    onClick={() => setSelectedBrand(brand)}
                   >
-                    {category}
-                    <span className="product-count">
-                      ({getProductsByCategory(category).length})
+                    {brand}
+                    <span className="brand-count">
+                      ({getProductsByCategory(category).filter(p =>
+                        brand === 'Todas' ? true : p.brand === brand
+                      ).length})
                     </span>
                   </button>
                 ))}
               </div>
             </div>
 
+            {/* Ordenamiento */}
             <div className="filter-section">
               <h3 className="filter-title">Ordenar Por</h3>
               <select
@@ -90,17 +111,24 @@ function Shop() {
             </div>
           </aside>
 
-          {/* Productos Grid */}
-          <section className="shop-content">
+          {/* Contenido Principal */}
+          <section className="category-content">
             <div className="products-info">
               <p className="products-count">
-                Mostrando {filteredProducts.length} productos
+                Mostrando {filteredProducts.length} de{' '}
+                {getProductsByCategory(category).length} productos
               </p>
+              {selectedBrand !== 'Todas' && (
+                <p className="filter-applied">
+                  Filtrado por: <strong>{selectedBrand}</strong>
+                </p>
+              )}
             </div>
 
-            <div className="shop-products-grid">
+            {/* Grid de Productos */}
+            <div className="category-products-grid">
               {filteredProducts.map(product => (
-                <article key={product.id} className="shop-product-card">
+                <article key={product.id} className="category-product-card">
                   {/* Badges */}
                   <div className="product-badges">
                     {product.discount > 0 && (
@@ -114,11 +142,11 @@ function Shop() {
                   </div>
 
                   {/* Imagen */}
-                  <div className="shop-product-image-wrapper">
+                  <div className="category-product-image-wrapper">
                     <img
                       src={product.images[0]}
                       alt={product.model}
-                      className="shop-product-image"
+                      className="category-product-image"
                       loading="lazy"
                     />
                     <div className="product-overlay">
@@ -128,23 +156,23 @@ function Shop() {
                         title="Agregar al carrito"
                       >
                         <FontAwesomeIcon icon={faShoppingCart} />
-                        Agregar al carrito
+                        Agregar
                       </button>
                     </div>
                   </div>
 
-                  {/* Información del producto */}
-                  <div className="shop-product-info">
+                  {/* Información */}
+                  <div className="category-product-info">
                     <div className="product-header">
-                      <h3 className="shop-product-brand">{product.brand}</h3>
-                      <span className="shop-product-rating">
+                      <h3 className="category-product-brand">
+                        {product.brand}
+                      </h3>
+                      <span className="category-product-rating">
                         ⭐ {product.rating}
                       </span>
                     </div>
 
-                    <p className="shop-product-model">{product.model}</p>
-
-                    <p className="shop-product-category">{product.category}</p>
+                    <p className="category-product-model">{product.model}</p>
 
                     {/* Precios */}
                     <div className="product-prices">
@@ -154,9 +182,7 @@ function Shop() {
                             {formatPrice(product.price)}
                           </span>
                           <span className="final-price">
-                            {formatPrice(
-                              getPriceWithDiscount(product)
-                            )}
+                            {formatPrice(getPriceWithDiscount(product))}
                           </span>
                         </>
                       ) : (
@@ -181,7 +207,9 @@ function Shop() {
 
             {filteredProducts.length === 0 && (
               <div className="no-products">
-                <p>No hay productos disponibles en esta categoría</p>
+                <p>
+                  No hay productos disponibles con los filtros seleccionados
+                </p>
               </div>
             )}
           </section>
@@ -191,4 +219,4 @@ function Shop() {
   )
 }
 
-export default Shop
+export default CategoryPage

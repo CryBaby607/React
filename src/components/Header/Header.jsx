@@ -40,19 +40,19 @@ function Header() {
                 </Link>
               </li>
               <li>
-                <a href="#hombre" onClick={closeMenu}>
+                <Link to="/hombre" onClick={closeMenu}>
                   Hombre
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#mujer" onClick={closeMenu}>
+                <Link to="/mujer" onClick={closeMenu}>
                   Mujer
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#gorras" onClick={closeMenu}>
+                <Link to="/gorras" onClick={closeMenu}>
                   Gorras
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
