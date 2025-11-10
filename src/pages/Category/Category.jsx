@@ -3,7 +3,7 @@ import { useCart } from '../../context/CartContext'
 import { getProductsByCategory } from '../../data/Products'
 import { sortProducts, getSortOptions } from '../../utils/sorting'
 import { getUniqueBrands, applyFilters } from '../../utils/filters'
-import ProductCard from '../../components/ProductCard'
+import ProductCard from '../../components/ProductCard/ProductCard'
 import './Category.css'
 
 function CategoryPage({ category }) {

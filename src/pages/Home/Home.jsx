@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
 import { getFeaturedProducts } from '../../data/Products'
-import ProductCard from '../../components/ProductCard'
+import ProductCard from '../../components/ProductCard/ProductCard'
 import './Home.css'
 
 function Home() {
