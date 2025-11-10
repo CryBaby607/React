@@ -13,9 +13,9 @@ import Cart from './pages/Cart/Cart'
 export default function App() {
   return (
     <CartProvider>
-      <div>
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <Header />
-        <main>
+        <main style={{ flex: 1 }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/cart" element={<Cart />} />

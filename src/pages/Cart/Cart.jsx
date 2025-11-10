@@ -138,10 +138,6 @@ function Cart() {
               <a href="/" className="btn btn-secondary btn-continue">
                 Continuar Comprando
               </a>
-
-              <p className="summary-note">
-                Los impuestos serán calculados en el próximo paso.
-              </p>
             </div>
           </aside>
         </div>

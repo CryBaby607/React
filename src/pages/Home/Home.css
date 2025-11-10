@@ -2,9 +2,6 @@
   min-height: 100vh;
 }
 
-/* ============================================
-   HERO SECTION
-============================================ */
 .hero {
   position: relative;
   height: 600px;
@@ -62,9 +59,6 @@
   flex-wrap: wrap;
 }
 
-/* ============================================
-   BUTTONS
-============================================ */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -93,9 +87,6 @@
   box-shadow: var(--shadow-lg);
 }
 
-/* ============================================
-   SECTIONS
-============================================ */
 .categories-section,
 .featured-section,
 .about-us,
@@ -122,9 +113,6 @@
   letter-spacing: -0.5px;
 }
 
-/* ============================================
-   CATEGORIES GRID
-============================================ */
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -185,9 +173,6 @@
   z-index: 2;
 }
 
-/* ============================================
-   PRODUCTS GRID
-============================================ */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -274,9 +259,6 @@
   color: var(--primary);
 }
 
-/* ============================================
-   ABOUT US SECTION
-============================================ */
 .about-us {
   background-color: var(--white);
 }
@@ -343,9 +325,6 @@
   letter-spacing: 0.5px;
 }
 
-/* ============================================
-   NEWSLETTER SECTION
-============================================ */
 .newsletter-content {
   max-width: 700px;
   margin: 0 auto;
@@ -423,9 +402,6 @@
   transform: scale(0.98);
 }
 
-/* ============================================
-   RESPONSIVE
-============================================ */
 @media (max-width: 1024px) {
   .hero {
     height: 500px;
