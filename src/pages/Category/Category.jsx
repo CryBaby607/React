@@ -1,12 +1,11 @@
-import { useState } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import { useCart } from '../../context/CartContext'
-import {
-  getProductsByCategory,
-  getPriceWithDiscount,
-  getBrands
-} from '../../data/Products'
+import { getProductsByCategory, getPriceWithDiscount } from '../../data/Products'
+import { formatPrice } from '../../utils/formatters'
+import { sortProducts, getSortOptions } from '../../utils/sorting'
+import { getUniqueBrands, applyFilters } from '../../utils/filters'
 import './Category.css'
 
 function CategoryPage({ category }) {
@@ -15,49 +14,50 @@ function CategoryPage({ category }) {
   const [sortBy, setSortBy] = useState('newest')
 
   // Obtener todos los productos de la categoría
-  let filteredProducts = getProductsByCategory(category)
+  const allProducts = useMemo(
+    () => getProductsByCategory(category),
+    [category]
+  )
 
-  // Obtener marcas únicas de esta categoría
-  const brandsInCategory = [
-    'Todas',
-    ...new Set(filteredProducts.map(p => p.brand))
-  ]
+  // Obtener marcas únicas (memoizado)
+  const brandsInCategory = useMemo(
+    () => getUniqueBrands(allProducts, true),
+    [allProducts]
+  )
 
-  // Filtrar por marca
-  if (selectedBrand !== 'Todas') {
-    filteredProducts = filteredProducts.filter(p => p.brand === selectedBrand)
-  }
+  // Aplicar filtros (memoizado)
+  const filteredProducts = useMemo(() => {
+    return applyFilters(allProducts, { brand: selectedBrand })
+  }, [allProducts, selectedBrand])
 
-  // Aplicar ordenamiento
-  if (sortBy === 'price-low') {
-    filteredProducts = [...filteredProducts].sort((a, b) => a.price - b.price)
-  } else if (sortBy === 'price-high') {
-    filteredProducts = [...filteredProducts].sort((a, b) => b.price - a.price)
-  } else if (sortBy === 'newest') {
-    filteredProducts = [...filteredProducts].sort((a, b) => b.isNew - a.isNew)
-  } else if (sortBy === 'rating') {
-    filteredProducts = [...filteredProducts].sort((a, b) => b.rating - a.rating)
-  }
+  // Aplicar ordenamiento (memoizado)
+  const sortedProducts = useMemo(() => {
+    return sortProducts(filteredProducts, sortBy)
+  }, [filteredProducts, sortBy])
 
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('es-MX', {
-      style: 'currency',
-      currency: 'MXN',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(price)
-  }
+  /**
+   * Agregar producto al carrito
+   * Memoizado para evitar recrear función cada render
+   */
+  const handleAddToCart = useCallback((product) => {
+    try {
+      const cartItem = {
+        id: product.id,
+        name: `${product.brand} ${product.model}`,
+        price: getPriceWithDiscount(product),
+        image: product.images[0],
+        category: product.category
+      }
 
-  const handleAddToCart = (product) => {
-    addToCart({
-      id: product.id,
-      name: `${product.brand} ${product.model}`,
-      price: getPriceWithDiscount(product),
-      image: product.images[0],
-      category: product.category
-    })
-    alert(`${product.brand} ${product.model} agregado al carrito`)
-  }
+      addToCart(cartItem)
+
+      // Feedback al usuario (en futuro: usar Toast)
+      alert(`${product.brand} ${product.model} agregado al carrito`)
+    } catch (error) {
+      console.error('Error al agregar al carrito:', error)
+      alert('Error al agregar producto')
+    }
+  }, [addToCart])
 
   // Mapeo de títulos de categoría
   const categoryTitles = {
@@ -83,12 +83,15 @@ function CategoryPage({ category }) {
                       selectedBrand === brand ? 'active' : ''
                     }`}
                     onClick={() => setSelectedBrand(brand)}
+                    aria-pressed={selectedBrand === brand}
                   >
                     {brand}
                     <span className="brand-count">
-                      ({getProductsByCategory(category).filter(p =>
-                        brand === 'Todas' ? true : p.brand === brand
-                      ).length})
+                      (
+                      {brand === 'Todas'
+                        ? allProducts.length
+                        : allProducts.filter(p => p.brand === brand).length}
+                      )
                     </span>
                   </button>
                 ))}
@@ -102,11 +105,13 @@ function CategoryPage({ category }) {
                 className="sort-select"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
+                aria-label="Ordenar productos"
               >
-                <option value="newest">Más Nuevos</option>
-                <option value="price-low">Precio: Menor a Mayor</option>
-                <option value="price-high">Precio: Mayor a Menor</option>
-                <option value="rating">Mejor Calificados</option>
+                {getSortOptions().map(option => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
               </select>
             </div>
           </aside>
@@ -115,8 +120,7 @@ function CategoryPage({ category }) {
           <section className="category-content">
             <div className="products-info">
               <p className="products-count">
-                Mostrando {filteredProducts.length} de{' '}
-                {getProductsByCategory(category).length} productos
+                Mostrando {sortedProducts.length} de {allProducts.length} productos
               </p>
               {selectedBrand !== 'Todas' && (
                 <p className="filter-applied">
@@ -127,7 +131,7 @@ function CategoryPage({ category }) {
 
             {/* Grid de Productos */}
             <div className="category-products-grid">
-              {filteredProducts.map(product => (
+              {sortedProducts.map(product => (
                 <article key={product.id} className="category-product-card">
                   {/* Badges */}
                   <div className="product-badges">
@@ -153,7 +157,7 @@ function CategoryPage({ category }) {
                       <button
                         className="btn btn-primary btn-add-to-cart"
                         onClick={() => handleAddToCart(product)}
-                        title="Agregar al carrito"
+                        title={`Agregar ${product.brand} ${product.model} al carrito`}
                       >
                         <FontAwesomeIcon icon={faShoppingCart} />
                         Agregar
@@ -205,7 +209,7 @@ function CategoryPage({ category }) {
               ))}
             </div>
 
-            {filteredProducts.length === 0 && (
+            {sortedProducts.length === 0 && (
               <div className="no-products">
                 <p>
                   No hay productos disponibles con los filtros seleccionados
