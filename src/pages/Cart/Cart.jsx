@@ -1,4 +1,3 @@
-// src/pages/Cart/Cart.jsx debería SOLO ser:
 import { useCart } from '../../context/CartContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
