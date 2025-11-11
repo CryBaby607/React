@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass, faShoppingCart } from '@fortawesome/free-solid-svg-icons'
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import { useCart } from '../../context/CartContext'
+import SearchBar from '../SearchBar/SearchBar' // ⬅️ NUEVO
 import './Header.css'
 
 function Header() {
@@ -30,6 +31,9 @@ function Header() {
               </span>
             </Link>
           </div>
+
+          {/* SearchBar (NUEVO) */}
+          <SearchBar />
 
           {/* Navigation */}
           <nav className={`nav ${isMenuOpen ? 'active' : ''}`}>
@@ -59,10 +63,6 @@ function Header() {
 
           {/* Icons and Hamburger */}
           <div className="header-controls">
-            <button className="icon-btn" aria-label="Search">
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </button>
-
             {/* Link al carrito */}
             <Link
               to="/cart"
