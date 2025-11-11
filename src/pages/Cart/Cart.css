@@ -300,6 +300,7 @@
 .btn-continue:hover {
   background-color: var(--primary);
   color: var(--white);
+  text-decoration: none;
 }
 
 @media (max-width: 1024px) {

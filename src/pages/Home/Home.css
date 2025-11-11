@@ -91,8 +91,9 @@
 .btn-primary:hover {
   background-color: var(--secondary);
   border-color: var(--secondary);
-  transform: translateY(-2px);
+  color: var(--white);
   box-shadow: var(--shadow-lg);
+  text-decoration: none;
 }
 
 .categories-section,

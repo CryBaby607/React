@@ -308,6 +308,7 @@
 .btn-secondary:hover {
   background-color: var(--primary);
   color: var(--white);
+  text-decoration: none;
 }
 
 /* === Mensaje de éxito === */
