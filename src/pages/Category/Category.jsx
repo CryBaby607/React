@@ -134,7 +134,6 @@ function CategoryPage({ category }) {
                   onAddToCart={handleAddToCart}
                   variant="default"
                   showCategory={false}
-                  showStock={true}
                 />
               ))}
             </div>

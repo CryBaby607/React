@@ -13,7 +13,6 @@ import './ProductCard.css'
  * @param {boolean} props.showOverlay - Mostrar overlay con botón (default: true)
  * @param {string} props.variant - Variante visual: 'default' | 'featured' | 'compact'
  * @param {boolean} props.showCategory - Mostrar categoría (default: true)
- * @param {boolean} props.showStock - Mostrar información de stock (default: true)
  * 
  * @example
  * <ProductCard 
@@ -27,8 +26,7 @@ function ProductCard({
   onAddToCart,
   showOverlay = true,
   variant = 'default',
-  showCategory = true,
-  showStock = true
+  showCategory = true
 }) {
   
   // ========================================
@@ -77,11 +75,6 @@ function ProductCard({
     }
   }
 
-  
-  // ========================================
-  // RENDERIZADO
-  // ========================================
-  
   return (
     <article className={`product-card product-card--${variant}`}>
       
@@ -169,15 +162,6 @@ function ProductCard({
             </span>
           )}
         </div>
-
-        {/* ===== STOCK (opcional) ===== */}
-        {showStock && product.inStock !== undefined && (
-          <div className="product-card__stock">
-            <span className={`stock-badge ${product.inStock ? 'stock-badge--available' : 'stock-badge--unavailable'}`}>
-              {product.inStock ? '✓ En Stock' : '✕ Agotado'}
-            </span>
-          </div>
-        )}
       </div>
     </article>
   )

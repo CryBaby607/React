@@ -1,3 +1,4 @@
+
 .product-card {
   position: relative;
   background-color: var(--white);
@@ -48,6 +49,10 @@
   background-color: var(--accent);
   color: var(--white);
 }
+
+/* ============================================
+   IMAGEN Y OVERLAY
+============================================ */
 
 .product-card__image-wrapper {
   position: relative;
@@ -178,25 +183,8 @@
   color: var(--accent);
 }
 
-.product-card__stock {
-  padding-top: var(--spacing-sm);
-  border-top: 1px solid var(--light);
-  margin-top: auto;
-}
 
-.stock-badge {
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-semibold);
-}
-
-.stock-badge--available {
-  color: var(--success);
-}
-
-.stock-badge--unavailable {
-  color: var(--error);
-}
-
+/* Variante: Featured (para home page) */
 .product-card--featured .product-card__image-wrapper {
   height: 320px;
 }
