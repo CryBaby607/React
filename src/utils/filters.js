@@ -100,18 +100,6 @@ export const filterInStock = (products) => {
 }
 
 /**
- * Filtra productos por calificación mínima
- * @param {Array} products - Productos
- * @param {number} minRating - Calificación mínima (0-5)
- * @returns {Array} Productos filtrados
- */
-export const filterByRating = (products, minRating = 0) => {
-  if (!Array.isArray(products)) return []
-
-  return products.filter(p => (p.rating || 0) >= minRating)
-}
-
-/**
  * Aplica múltiples filtros a un array de productos
  * Combina todos los filtros de forma declarativa
  * @param {Array} products - Productos iniciales
@@ -120,15 +108,13 @@ export const filterByRating = (products, minRating = 0) => {
  *   - priceMin: number - Precio mínimo
  *   - priceMax: number - Precio máximo
  *   - inStock: boolean - Solo en stock
- *   - minRating: number - Calificación mínima
  * @returns {Array} Productos filtrados
  * @example
  * const filtered = applyFilters(products, {
  *   brand: 'Nike',
  *   priceMin: 2000,
  *   priceMax: 4000,
- *   inStock: true,
- *   minRating: 4
+ *   inStock: true
  * })
  */
 export const applyFilters = (products, filters = {}) => {
@@ -152,11 +138,6 @@ export const applyFilters = (products, filters = {}) => {
   // Filtrar solo stock disponible
   if (filters.inStock === true) {
     result = filterInStock(result)
-  }
-
-  // Filtrar por rating mínimo
-  if (filters.minRating !== undefined && filters.minRating > 0) {
-    result = filterByRating(result, filters.minRating)
   }
 
   return result

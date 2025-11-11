@@ -1,7 +1,4 @@
 export const mockProducts = [
-  // ============================================
-  // TENIS HOMBRE
-  // ============================================
   {
     id: 1,
     brand: 'Nike',
@@ -33,16 +30,10 @@ export const mockProducts = [
     images: [
       'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&h=500&fit=crop',
     ],
-    rating: 4.6,
-    reviews: 189,
     inStock: true,
     isNew: false,
     isFeatured: false
   },
-
-  // ============================================
-  // TENIS MUJER
-  // ============================================
   {
     id: 7,
     brand: 'Nike',
@@ -77,10 +68,6 @@ export const mockProducts = [
     isNew: true,
     isFeatured: true
   },
-
-  // ============================================
-  // GORRAS
-  // ============================================
   {
     id: 13,
     brand: 'Nike',

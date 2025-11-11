@@ -1,8 +1,3 @@
-/* ============================================
-   PRODUCT CARD - BASE
-   Componente reutilizable para mostrar productos
-============================================ */
-
 .product-card {
   position: relative;
   background-color: var(--white);
@@ -20,10 +15,6 @@
   transform: translateY(-8px);
   box-shadow: var(--shadow-xl);
 }
-
-/* ============================================
-   BADGES (Descuento y Nuevo)
-============================================ */
 
 .product-card__badges {
   position: absolute;
@@ -57,10 +48,6 @@
   background-color: var(--accent);
   color: var(--white);
 }
-
-/* ============================================
-   IMAGEN Y OVERLAY
-============================================ */
 
 .product-card__image-wrapper {
   position: relative;
@@ -110,10 +97,6 @@
   white-space: nowrap;
 }
 
-/* ============================================
-   INFORMACIÓN DEL PRODUCTO
-============================================ */
-
 .product-card__info {
   padding: var(--spacing-lg);
   display: flex;
@@ -131,7 +114,7 @@
   letter-spacing: 0.5px;
 }
 
-/* Header (Nombre y Rating) */
+/* Header (Nombre) */
 .product-card__header {
   display: flex;
   justify-content: space-between;
@@ -163,13 +146,6 @@
   color: var(--dark-gray);
 }
 
-.product-card__rating {
-  font-size: var(--fs-sm);
-  color: var(--gray);
-  white-space: nowrap;
-  font-weight: var(--fw-semibold);
-}
-
 /* Descripción (solo en variant featured) */
 .product-card__description {
   font-size: var(--fs-sm);
@@ -177,10 +153,6 @@
   line-height: 1.6;
   margin: 0;
 }
-
-/* ============================================
-   PRECIOS
-============================================ */
 
 .product-card__prices {
   display: flex;
@@ -206,10 +178,6 @@
   color: var(--accent);
 }
 
-/* ============================================
-   STOCK
-============================================ */
-
 .product-card__stock {
   padding-top: var(--spacing-sm);
   border-top: 1px solid var(--light);
@@ -229,22 +197,6 @@
   color: var(--error);
 }
 
-/* Footer (Reviews) */
-.product-card__footer {
-  padding-top: var(--spacing-sm);
-  border-top: 1px solid var(--light);
-}
-
-.product-card__reviews {
-  font-size: var(--fs-xs);
-  color: var(--gray);
-}
-
-/* ============================================
-   VARIANTES
-============================================ */
-
-/* Variante: Featured (para home page) */
 .product-card--featured .product-card__image-wrapper {
   height: 320px;
 }
@@ -290,9 +242,6 @@
   padding: 2px 6px;
 }
 
-/* ============================================
-   RESPONSIVE - TABLET
-============================================ */
 @media (max-width: 1024px) {
   .product-card__image-wrapper {
     height: 240px;
@@ -303,9 +252,6 @@
   }
 }
 
-/* ============================================
-   RESPONSIVE - MOBILE
-============================================ */
 @media (max-width: 768px) {
   .product-card__image-wrapper {
     height: 220px;
@@ -343,9 +289,6 @@
   }
 }
 
-/* ============================================
-   RESPONSIVE - SMALL MOBILE
-============================================ */
 @media (max-width: 480px) {
   .product-card__image-wrapper {
     height: 180px;

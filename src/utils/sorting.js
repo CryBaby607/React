@@ -1,17 +1,10 @@
-/**
- * Estrategias de ordenamiento para productos
- * Patrón: Key -> Función comparadora
- * Esto permite agregar nuevas estrategias sin modificar componentes
- */
 export const SORT_STRATEGIES = {
   'price-low': (a, b) => a.price - b.price,
   'price-high': (a, b) => b.price - a.price,
   'newest': (a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0),
-  'rating': (a, b) => (b.rating || 0) - (a.rating || 0),
   'discount': (a, b) => (b.discount || 0) - (a.discount || 0),
   'name-asc': (a, b) => a.model.localeCompare(b.model),
-  'name-desc': (a, b) => b.model.localeCompare(a.model),
-  'reviews': (a, b) => (b.reviews || 0) - (a.reviews || 0)
+  'name-desc': (a, b) => b.model.localeCompare(a.model)
 }
 
 /**
@@ -46,11 +39,9 @@ export const getSortOptions = () => {
     { value: 'newest', label: 'Más Nuevos' },
     { value: 'price-low', label: 'Precio: Menor a Mayor' },
     { value: 'price-high', label: 'Precio: Mayor a Menor' },
-    { value: 'rating', label: 'Mejor Calificados' },
     { value: 'discount', label: 'Mayor Descuento' },
     { value: 'name-asc', label: 'Nombre (A-Z)' },
-    { value: 'name-desc', label: 'Nombre (Z-A)' },
-    { value: 'reviews', label: 'Más Reseñas' }
+    { value: 'name-desc', label: 'Nombre (Z-A)' }
   ]
 }
 

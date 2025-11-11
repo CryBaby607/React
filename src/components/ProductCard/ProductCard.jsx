@@ -136,19 +136,13 @@ function ProductCard({
           </span>
         )}
         
-        {/* Header: Nombre y Rating */}
+        {/* Header: Nombre */}
         <div className="product-card__header">
           <h3 className="product-card__name">
             {product.brand && <span className="product-card__brand">{product.brand}</span>}
             {product.model && <span className="product-card__model">{product.model}</span>}
             {!product.brand && !product.model && product.name}
           </h3>
-          
-          {product.rating && (
-            <span className="product-card__rating" title={`${product.rating} estrellas`}>
-              ⭐ {product.rating}
-            </span>
-          )}
         </div>
 
         {/* Descripción corta (solo en variant featured) */}
@@ -181,15 +175,6 @@ function ProductCard({
           <div className="product-card__stock">
             <span className={`stock-badge ${product.inStock ? 'stock-badge--available' : 'stock-badge--unavailable'}`}>
               {product.inStock ? '✓ En Stock' : '✕ Agotado'}
-            </span>
-          </div>
-        )}
-
-        {/* ===== FOOTER: Reviews (si existen) ===== */}
-        {product.reviews && (
-          <div className="product-card__footer">
-            <span className="product-card__reviews">
-              ({product.reviews} reseñas)
             </span>
           </div>
         )}
