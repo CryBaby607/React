@@ -32,9 +32,6 @@ function Header() {
             </Link>
           </div>
 
-          {/* SearchBar (NUEVO) */}
-          <SearchBar />
-
           {/* Navigation */}
           <nav className={`nav ${isMenuOpen ? 'active' : ''}`}>
             <ul className="nav-list">
@@ -60,6 +57,9 @@ function Header() {
               </li>
             </ul>
           </nav>
+
+            {/* SearchBar (NUEVO) */}
+          <SearchBar />
 
           {/* Icons and Hamburger */}
           <div className="header-controls">
