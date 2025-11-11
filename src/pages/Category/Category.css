@@ -3,9 +3,6 @@
   background-color: var(--light);
 }
 
-/* ============================================
-   CATEGORY WRAPPER
-============================================ */
 .category-wrapper {
   display: grid;
   grid-template-columns: 250px 1fr;
@@ -13,9 +10,6 @@
   padding: var(--spacing-3xl) 0;
 }
 
-/* ============================================
-   SIDEBAR
-============================================ */
 .category-sidebar {
   display: flex;
   flex-direction: column;
@@ -42,7 +36,6 @@
   border-bottom: 2px solid var(--light);
 }
 
-/* === Filtro de Marcas === */
 .filter-brands {
   display: flex;
   flex-direction: column;
@@ -83,7 +76,6 @@
   opacity: 0.8;
 }
 
-/* === Ordenamiento === */
 .sort-select {
   width: 100%;
   padding: var(--spacing-md);
@@ -107,9 +99,6 @@
   box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.1);
 }
 
-/* ============================================
-   CONTENT
-============================================ */
 .category-content {
   display: flex;
   flex-direction: column;
@@ -130,9 +119,6 @@
   margin: 0;
 }
 
-/* ============================================
-   PRODUCTS GRID
-============================================ */
 .category-products-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -153,7 +139,6 @@
   box-shadow: var(--shadow-xl);
 }
 
-/* === Badges === */
 .product-badges {
   position: absolute;
   top: var(--spacing-md);
@@ -185,7 +170,6 @@
   color: var(--white);
 }
 
-/* === Imagen === */
 .category-product-image-wrapper {
   position: relative;
   height: 280px;
@@ -204,7 +188,6 @@
   transform: scale(1.1);
 }
 
-/* === Overlay === */
 .product-overlay {
   position: absolute;
   top: 0;
@@ -231,7 +214,6 @@
   font-size: var(--fs-base);
 }
 
-/* === Información === */
 .category-product-info {
   padding: var(--spacing-lg);
   display: flex;
@@ -302,9 +284,6 @@
   font-weight: var(--fw-semibold);
 }
 
-/* ============================================
-   NO PRODUCTS
-============================================ */
 .no-products {
   grid-column: 1 / -1;
   text-align: center;
@@ -319,9 +298,6 @@
   margin: 0;
 }
 
-/* ============================================
-   RESPONSIVE - TABLET
-============================================ */
 @media (max-width: 1024px) {
   .category-wrapper {
     grid-template-columns: 1fr;
@@ -342,9 +318,6 @@
   }
 }
 
-/* ============================================
-   RESPONSIVE - MOBILE
-============================================ */
 @media (max-width: 768px) {
   .category-wrapper {
     padding: var(--spacing-xl) 0;
@@ -378,9 +351,6 @@
   }
 }
 
-/* ============================================
-   RESPONSIVE - SMALL MOBILE
-============================================ */
 @media (max-width: 480px) {
   .category-products-grid {
     grid-template-columns: 1fr;

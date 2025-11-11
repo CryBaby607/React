@@ -34,9 +34,6 @@ function Home() {
     }
   ]
 
-  /**
-   * Handler para agregar al carrito desde productos destacados
-   */
   const handleAddToCart = (cartItem) => {
     try {
       addToCart(cartItem)
@@ -47,9 +44,6 @@ function Home() {
     }
   }
 
-  /**
-   * Handler para el newsletter
-   */
   const handleNewsletterSubmit = (e) => {
     e.preventDefault()
     if (newsletterEmail) {
