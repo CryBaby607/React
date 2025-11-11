@@ -1,22 +1,14 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom' // ⬅️ Importar Link
 import { formatPrice } from '../../utils/formatters'
 import { getPriceWithDiscount } from '../../data/Products'
 import './ProductCard.css'
 
-/**
- * Tarjeta reutilizable para mostrar productos
- * Props: product, onAddToCart, showOverlay, variant, showCategory
- */
 function ProductCard({ 
   product, 
-  onAddToCart,
-  showOverlay = true,
   variant = 'default',
   showCategory = true
 }) {
 
-  // ===== PREPARAR DATOS DERIVADOS =====
   const finalPrice = product.discount > 0 
     ? getPriceWithDiscount(product)
     : product.price
@@ -27,87 +19,60 @@ function ProductCard({
     ? product.images[0] 
     : product.image
 
-  // ===== EVENTOS =====
-  const handleAddClick = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-
-    if (onAddToCart) {
-      onAddToCart({
-        id: product.id,
-        name: productName,
-        price: finalPrice,
-        image: productImage,
-        category: product.category
-      })
-    }
-  }
-
   return (
-    <article className={`product-card product-card--${variant}`}>
-      
-      {/* BADGES DE ESTADO */}
-      {(product.discount > 0 || product.isNew) && (
-        <div className="product-card__badges">
-          {product.discount > 0 && <span className="badge badge--discount">-{product.discount}%</span>}
-          {product.isNew && <span className="badge badge--new">NUEVO</span>}
-        </div>
-      )}
-
-      {/* IMAGEN Y OVERLAY */}
-      <div className="product-card__image-wrapper">
-        <img
-          src={productImage}
-          alt={productName}
-          className="product-card__image"
-          loading="lazy"
-        />
-        {showOverlay && onAddToCart && product.inStock !== false && (
-          <div className="product-card__overlay">
-            <button
-              className="btn btn-primary btn--add-to-cart"
-              onClick={handleAddClick}
-              aria-label={`Agregar ${productName} al carrito`}
-              title={`Agregar ${productName}`}
-            >
-              <FontAwesomeIcon icon={faShoppingCart} />
-              <span>Agregar</span>
-            </button>
+    <Link to={`/product/${product.id}`} style={{ textDecoration: 'none' }}>
+      <article className={`product-card product-card--${variant}`}>
+        
+        {/* BADGES DE ESTADO */}
+        {(product.discount > 0 || product.isNew) && (
+          <div className="product-card__badges">
+            {product.discount > 0 && <span className="badge badge--discount">-{product.discount}%</span>}
+            {product.isNew && <span className="badge badge--new">NUEVO</span>}
           </div>
         )}
-      </div>
 
-      {/* INFORMACIÓN DEL PRODUCTO */}
-      <div className="product-card__info">
-        {showCategory && product.category && (
-          <span className="product-card__category">{product.category}</span>
-        )}
-
-        <div className="product-card__header">
-          <h3 className="product-card__name">
-            {product.brand && <span className="product-card__brand">{product.brand}</span>}
-            {product.model && <span className="product-card__model">{product.model}</span>}
-            {!product.brand && !product.model && product.name}
-          </h3>
+        {/* IMAGEN */}
+        <div className="product-card__image-wrapper">
+          <img
+            src={productImage}
+            alt={productName}
+            className="product-card__image"
+            loading="lazy"
+          />
         </div>
 
-        {variant === 'featured' && product.description && (
-          <p className="product-card__description">{product.description.substring(0, 80)}...</p>
-        )}
-
-        {/* PRECIOS */}
-        <div className="product-card__prices">
-          {product.discount > 0 ? (
-            <>
-              <span className="product-card__price product-card__price--original">{formatPrice(product.price)}</span>
-              <span className="product-card__price product-card__price--final">{formatPrice(finalPrice)}</span>
-            </>
-          ) : (
-            <span className="product-card__price product-card__price--final">{formatPrice(product.price)}</span>
+        {/* INFORMACIÓN DEL PRODUCTO */}
+        <div className="product-card__info">
+          {showCategory && product.category && (
+            <span className="product-card__category">{product.category}</span>
           )}
+
+          <div className="product-card__header">
+            <h3 className="product-card__name">
+              {product.brand && <span className="product-card__brand">{product.brand}</span>}
+              {product.model && <span className="product-card__model">{product.model}</span>}
+              {!product.brand && !product.model && product.name}
+            </h3>
+          </div>
+
+          {variant === 'featured' && product.description && (
+            <p className="product-card__description">{product.description.substring(0, 80)}...</p>
+          )}
+
+          {/* PRECIOS */}
+          <div className="product-card__prices">
+            {product.discount > 0 ? (
+              <>
+                <span className="product-card__price product-card__price--original">{formatPrice(product.price)}</span>
+                <span className="product-card__price product-card__price--final">{formatPrice(finalPrice)}</span>
+              </>
+            ) : (
+              <span className="product-card__price product-card__price--final">{formatPrice(product.price)}</span>
+            )}
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </Link> 
   )
 }
 

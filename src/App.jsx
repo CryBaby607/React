@@ -12,6 +12,7 @@ import Hombre from './pages/Category/Hombre'
 import Mujer from './pages/Category/Mujer'
 import Gorras from './pages/Category/Gorras'
 import Cart from './pages/Cart/Cart'
+import ProductDetail from './pages/ProductDetail/ProductDetail' // ⬅️ NUEVO
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="/mujer" element={<Mujer />} />
             <Route path="/gorras" element={<Gorras />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/product/:id" element={<ProductDetail />} /> {/* ⬅️ NUEVO */}
           </Routes>
         </main>
         <Footer />

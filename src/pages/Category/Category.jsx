@@ -1,5 +1,4 @@
-import { useState, useMemo, useCallback } from 'react'
-import { useCart } from '../../context/CartContext'
+import { useState, useMemo } from 'react'
 import { getProductsByCategory } from '../../data/Products'
 import { sortProducts, getSortOptions } from '../../utils/sorting'
 import { getUniqueBrands, applyFilters } from '../../utils/filters'
@@ -7,7 +6,6 @@ import ProductCard from '../../components/ProductCard/ProductCard'
 import './Category.css'
 
 function CategoryPage({ category }) {
-  const { addToCart } = useCart()
   const [selectedBrand, setSelectedBrand] = useState('Todas')
   const [sortBy, setSortBy] = useState('newest')
 
@@ -32,21 +30,6 @@ function CategoryPage({ category }) {
   const sortedProducts = useMemo(() => {
     return sortProducts(filteredProducts, sortBy)
   }, [filteredProducts, sortBy])
-
-  /**
-   * Agregar producto al carrito
-   * El ProductCard ya normaliza el producto, solo pasamos el callback
-   */
-  const handleAddToCart = useCallback((cartItem) => {
-    try {
-      addToCart(cartItem)
-      // Feedback al usuario (en futuro: usar Toast)
-      alert(`${cartItem.name} agregado al carrito`)
-    } catch (error) {
-      console.error('Error al agregar al carrito:', error)
-      alert('Error al agregar producto')
-    }
-  }, [addToCart])
 
   return (
     <div className="category-page">
@@ -112,7 +95,6 @@ function CategoryPage({ category }) {
                 <ProductCard
                   key={product.id}
                   product={product}
-                  onAddToCart={handleAddToCart}
                   variant="default"
                   showCategory={false}
                 />

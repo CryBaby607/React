@@ -1,12 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useCart } from '../../context/CartContext'
 import { getFeaturedProducts } from '../../data/Products'
 import ProductCard from '../../components/ProductCard/ProductCard'
 import './Home.css'
 
 function Home() {
-  const { addToCart } = useCart()
   const [newsletterEmail, setNewsletterEmail] = useState('')
 
   // Obtener productos destacados desde el archivo de datos
@@ -33,16 +31,6 @@ function Home() {
       link: '/gorras'
     }
   ]
-
-  const handleAddToCart = (cartItem) => {
-    try {
-      addToCart(cartItem)
-      alert(`${cartItem.name} agregado al carrito`)
-    } catch (error) {
-      console.error('Error al agregar al carrito:', error)
-      alert('Error al agregar producto')
-    }
-  }
 
   const handleNewsletterSubmit = (e) => {
     e.preventDefault()
@@ -88,10 +76,8 @@ function Home() {
               <ProductCard
                 key={product.id}
                 product={product}
-                onAddToCart={handleAddToCart}
                 variant="featured"
                 showCategory={true}
-                showStock={false}
               />
             ))}
           </div>

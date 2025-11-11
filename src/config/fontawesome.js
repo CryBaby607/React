@@ -5,7 +5,12 @@ import {
   faMagnifyingGlass,
   faShoppingCart,
   faBars,
-  faTimes
+  faTimes,
+  faArrowLeft,    // ⬅️ NUEVO
+  faCheck,        // ⬅️ NUEVO
+  faTruck,        // ⬅️ NUEVO
+  faShieldAlt,    // ⬅️ NUEVO
+  faSync          // ⬅️ NUEVO
 } from '@fortawesome/free-solid-svg-icons'
 
 // Importar iconos de Marcas (Brands)
@@ -23,6 +28,11 @@ library.add(
   faShoppingCart,
   faBars,
   faTimes,
+  faArrowLeft,    // ⬅️ NUEVO
+  faCheck,        // ⬅️ NUEVO
+  faTruck,        // ⬅️ NUEVO
+  faShieldAlt,    // ⬅️ NUEVO
+  faSync,         // ⬅️ NUEVO
   // Iconos Brands
   faFacebookF,
   faInstagram,

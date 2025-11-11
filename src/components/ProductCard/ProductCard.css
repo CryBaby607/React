@@ -50,7 +50,7 @@
 }
 
 /* ============================================
-   IMAGEN Y OVERLAY
+   IMAGEN
 ============================================ */
 
 .product-card__image-wrapper {
@@ -71,34 +71,6 @@
 
 .product-card:hover .product-card__image {
   transform: scale(1.08);
-}
-
-/* Overlay con botón */
-.product-card__overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity var(--transition-base);
-}
-
-.product-card:hover .product-card__overlay {
-  opacity: 1;
-}
-
-.btn--add-to-cart {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md) var(--spacing-xl);
-  font-size: var(--fs-base);
-  white-space: nowrap;
 }
 
 .product-card__info {
@@ -263,16 +235,6 @@
 
   .product-card__price--final {
     font-size: var(--fs-lg);
-  }
-
-  /* En móvil, mostrar overlay siempre */
-  .product-card__overlay {
-    opacity: 1;
-  }
-
-  .btn--add-to-cart {
-    padding: var(--spacing-sm) var(--spacing-md);
-    font-size: var(--fs-sm);
   }
 }
 
