@@ -48,22 +48,8 @@ function CategoryPage({ category }) {
     }
   }, [addToCart])
 
-  // Mapeo de títulos de categoría
-  const categoryTitles = {
-    'Hombre': 'Tenis Hombre',
-    'Mujer': 'Tenis Mujer',
-    'Gorras': 'Gorras'
-  }
-
   return (
     <div className="category-page">
-      {/* Header de categoría */}
-      <div className="category-header">
-        <div className="container">
-          <h1 className="category-title">{categoryTitles[category] || category}</h1>
-        </div>
-      </div>
-
       <div className="container">
         <div className="category-wrapper">
           
@@ -118,11 +104,6 @@ function CategoryPage({ category }) {
               <p className="products-count">
                 Mostrando {sortedProducts.length} de {allProducts.length} productos
               </p>
-              {selectedBrand !== 'Todas' && (
-                <p className="filter-applied">
-                  Filtrado por: <strong>{selectedBrand}</strong>
-                </p>
-              )}
             </div>
 
             {/* ===== GRID DE PRODUCTOS ===== */}

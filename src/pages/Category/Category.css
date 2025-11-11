@@ -7,25 +7,6 @@
 }
 
 /* ============================================
-   CATEGORY HEADER
-============================================ */
-.category-header {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--dark-gray) 100%);
-  color: var(--white);
-  padding: var(--spacing-2xl) 0;
-  text-align: center;
-}
-
-.category-title {
-  font-family: var(--font-title);
-  font-size: var(--fs-4xl);
-  font-weight: var(--fw-bold);
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: -0.5px;
-}
-
-/* ============================================
    CATEGORY WRAPPER
 ============================================ */
 .category-wrapper {
@@ -150,16 +131,6 @@
   color: var(--gray);
   font-weight: var(--fw-semibold);
   margin: 0;
-}
-
-.filter-applied {
-  font-size: var(--fs-sm);
-  color: var(--accent);
-  margin: var(--spacing-sm) 0 0 0;
-}
-
-.filter-applied strong {
-  color: var(--accent);
 }
 
 /* ============================================
@@ -372,24 +343,12 @@
   .category-products-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  .category-title {
-    font-size: var(--fs-3xl);
-  }
 }
 
 /* ============================================
    RESPONSIVE - MOBILE
 ============================================ */
 @media (max-width: 768px) {
-  .category-header {
-    padding: var(--spacing-xl) 0;
-  }
-
-  .category-title {
-    font-size: var(--fs-2xl);
-  }
-
   .category-wrapper {
     padding: var(--spacing-xl) 0;
   }
@@ -426,14 +385,6 @@
    RESPONSIVE - SMALL MOBILE
 ============================================ */
 @media (max-width: 480px) {
-  .category-header {
-    padding: var(--spacing-lg) 0;
-  }
-
-  .category-title {
-    font-size: var(--fs-xl);
-  }
-
   .category-products-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-md);
