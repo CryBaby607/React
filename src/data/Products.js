@@ -11,11 +11,10 @@ export const mockProducts = [
     sizes: [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46],
     images: [
       'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&h=500&fit=crop',
-      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&h=500&fit=crop&crop=top'
     ],
     inStock: true,
     isNew: true,
-    isFeatured: true
+    isFeatured: false
   },
   {
     id: 2,

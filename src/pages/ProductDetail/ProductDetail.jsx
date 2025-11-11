@@ -3,11 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
   faShoppingCart, 
-  faArrowLeft, 
-  faCheck,
-  faTruck,
-  faShieldAlt,
-  faSync
+  faCheck
 } from '@fortawesome/free-solid-svg-icons'
 import { useCart } from '../../context/CartContext'
 import { getProductById, getPriceWithDiscount } from '../../data/Products'
@@ -103,25 +99,6 @@ function ProductDetail() {
     <div className="product-detail">
       <div className="container">
         
-        {/* Breadcrumb */}
-        <div className="breadcrumb">
-          <Link to="/">Inicio</Link>
-          <span>/</span>
-          <Link to={`/${product.category.toLowerCase()}`}>{product.category}</Link>
-          <span>/</span>
-          <span>{productName}</span>
-        </div>
-
-        {/* Botón volver */}
-        <button 
-          className="btn-back"
-          onClick={() => navigate(-1)}
-          aria-label="Volver atrás"
-        >
-          <FontAwesomeIcon icon={faArrowLeft} />
-          <span>Volver</span>
-        </button>
-
         {/* Contenido principal */}
         <div className="detail-wrapper">
           
@@ -281,45 +258,6 @@ function ProductDetail() {
                 <span>¡Producto agregado al carrito!</span>
               </div>
             )}
-
-            {/* Beneficios */}
-            <div className="detail-benefits">
-              <div className="benefit-item">
-                <FontAwesomeIcon icon={faTruck} />
-                <div>
-                  <h4>Envío Gratis</h4>
-                  <p>En compras mayores a $1,000</p>
-                </div>
-              </div>
-              <div className="benefit-item">
-                <FontAwesomeIcon icon={faShieldAlt} />
-                <div>
-                  <h4>Compra Segura</h4>
-                  <p>Protección de datos garantizada</p>
-                </div>
-              </div>
-              <div className="benefit-item">
-                <FontAwesomeIcon icon={faSync} />
-                <div>
-                  <h4>Devoluciones</h4>
-                  <p>30 días para devoluciones</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Estado de stock */}
-            <div className="detail-stock">
-              {product.inStock !== false ? (
-                <span className="stock-available">
-                  <FontAwesomeIcon icon={faCheck} />
-                  En Stock
-                </span>
-              ) : (
-                <span className="stock-unavailable">
-                  Agotado
-                </span>
-              )}
-            </div>
           </div>
         </div>
       </div>
