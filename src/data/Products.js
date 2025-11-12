@@ -8,13 +8,13 @@ export const mockProducts = [
     description: 'Diseño revolucionario con amortiguación Air Max visible. Perfecto para uso diario y deportivo.',
     price: 3299,
     discount: 10,
-    sizes: [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46],
+    sizes: [36, 37, 38, 39, 40, 41, 42, 43, 44, 46],
     images: [
       'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&h=500&fit=crop',
     ],
     inStock: true,
     isNew: true,
-    isFeatured: false
+    isFeatured: true,
   },
   {
     id: 2,
